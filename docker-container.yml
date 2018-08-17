@@ -12,7 +12,7 @@
 
   - name: Enviando a aplciacao para os containers Centos
     copy:
-      src: /root/plays/appweb/{{ server }}
+      src: appweb/{{ server }}
       dest: /mnt/site/server1.png
     tags: app
 
