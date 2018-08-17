@@ -1,0 +1,27 @@
+---
+- hosts: dockers
+  tasks:
+
+  - name: Iniciando imagem docker Apache2
+    docker_container:
+      name: webserver
+      image: httpd
+      state: started
+      published_ports: 80:80
+      volumes: /mnt/site:/usr/local/apache2/htdocs/ 
+
+  - name: Enviando a aplciacao para os containers Centos
+    copy:
+      src: /root/plays/appweb/{{ server }}
+      dest: /mnt/site/server1.png
+    tags: app
+
+  - name: Enviando Index para os containers Centos
+    file:
+      path: /mnt/site/index.html
+      state: touch
+
+  - name: Enviando a aplciacao para os containers Centos
+    lineinfile:
+      path: /mnt/site/index.html
+      line: '<img src="server1.png" alt="Paris" class="center" width=600px>'
